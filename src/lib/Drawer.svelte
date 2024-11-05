@@ -8,8 +8,7 @@ import {ScrollArea} from "$lib/components/ui/scroll-area";
 
 import * as Select from "$lib/components/ui/select/index.js";
 import * as Sheet from "$lib/components/ui/sheet/index.js";
-import * as Collapsible from "$lib/components/ui/collapsible/index.js";
-import {type LetterConfigModel, VorstandRoleEnum} from "../api";
+import {type LetterConfigModel} from "../api";
 import {LetterConfigModelLogoEnum} from "../api";
 import Vorstand from "$lib/Vorstand.svelte";
 import DatePicker from "$lib/components/DatePicker.svelte";

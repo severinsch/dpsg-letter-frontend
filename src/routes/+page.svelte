@@ -4,7 +4,6 @@
     import {Checkbox} from "$lib/components/ui/checkbox";
     import {Textarea} from "$lib/components/ui/textarea";
     import {Button} from "$lib/components/ui/button";
-    import * as Sheet from "$lib/components/ui/sheet";
     import * as Select from "$lib/components/ui/select";
     import * as AlertDialog from "$lib/components/ui/alert-dialog";
     import {Separator} from "$lib/components/ui/separator";

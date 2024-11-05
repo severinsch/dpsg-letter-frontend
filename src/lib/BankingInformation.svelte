@@ -1,12 +1,11 @@
 <script lang="ts">
-    import {type LetterConfigModel, VorstandRoleEnum} from "../api";
+    import {type LetterConfigModel} from "../api";
     import {Input} from "$lib/components/ui/input";
-    import * as Select from "$lib/components/ui/select";
     import * as Collapsible from "$lib/components/ui/collapsible";
     import * as Card from "$lib/components/ui/card";
     import {Button} from "$lib/components/ui/button";
     import {Label} from "$lib/components/ui/label";
-    import {ChevronsUpDown, CircleX} from "lucide-svelte";
+    import {ChevronsUpDown} from "lucide-svelte";
 
     let { formData = $bindable() }: {formData: LetterConfigModel} = $props();
 

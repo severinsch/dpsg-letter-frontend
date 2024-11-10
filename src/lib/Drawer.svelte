@@ -14,7 +14,6 @@ import Vorstand from "$lib/Vorstand.svelte";
 import DatePicker from "$lib/components/DatePicker.svelte";
 import BankingInformation from "$lib/BankingInformation.svelte";
 
-
 let { formData = $bindable() }: {formData: LetterConfigModel} = $props();
 
 function getLogo(v: string | unknown): LetterConfigModelLogoEnum {

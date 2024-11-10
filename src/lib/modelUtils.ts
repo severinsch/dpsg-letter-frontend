@@ -116,7 +116,7 @@ const freisingTemplate: Partial<LetterConfigModel> = {
     includeHolidayLawPage: false,
     signUpIncludeAbroadClause: false,
     includeFrontPage: true,
-    address: "Am Rindermarkt 10, 85354\nFreising",
+    address: "REDACTED",
     bankInformation: {
         orgName: "DPSG Freising",
         iban: "REDACTED",

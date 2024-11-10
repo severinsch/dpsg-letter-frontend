@@ -6,11 +6,15 @@
     import {Button} from "$lib/components/ui/button";
     import * as Select from "$lib/components/ui/select";
     import * as AlertDialog from "$lib/components/ui/alert-dialog";
+    import * as Dialog from "$lib/components/ui/dialog";
+    import * as Popover from "$lib/components/ui/popover";
     import {Separator} from "$lib/components/ui/separator";
     import { Label } from "$lib/components/ui/label";
+    import {Circle} from 'svelte-loading-spinners';
     import "./createLetter.css";
     import {applyTemplate, emptyModel, validateModel} from "$lib/modelUtils";
     import Drawer from "$lib/Drawer.svelte";
+    import Help from "$lib/Help.svelte";
 
     let apiClient = new DefaultApi();
 
@@ -20,6 +24,7 @@
 
     let errorDialogOpen = $state(false);
     let errorDialogMessage = $state("");
+    let isLoading = $state(false);
 
     function showErrorMessage(message: string) {
         errorDialogMessage = message;
@@ -33,7 +38,9 @@
                 showErrorMessage(error)
                 return;
             }
+            isLoading = true;
             const response = await apiClient.apiV1LetterPost(formData, {responseType: "blob"});
+            isLoading = false;
             if (response.status !== 200) {
                 showErrorMessage(`API Error: ${response.status} ${response.statusText} (${response.data})`);
             }
@@ -73,27 +80,42 @@
         <Textarea placeholder="Inhalt" bind:value={formData.content} />
 
         <div class="form-checkbox">
-            <Checkbox id="terms" bind:checked={formData.includeSignUp} aria-labelledby="signup-label" />
+            <Checkbox id="singup" bind:checked={formData.includeSignUp} aria-labelledby="signup-label" />
             <Label id="signup-label" for="signup">Anmeldung anfügen</Label>
         </div>
 
         <Separator />
-
-        <Button type="submit">Submit</Button>
-        <Button type="button" on:click={() => {
-            if (downloadURL) {
-                const a = document.createElement('a');
-                a.href = downloadURL
-                a.download = 'letter.pdf';
-                a.click();
-            }
-            downloadURL = undefined;
-        }}
-        disabled={!downloadURL}
-        >Download PDF</Button>
+        <div class="button-group">
+            <div class="left-buttons">
+                <Button type="submit">Submit</Button>
+                <Button type="button" on:click={() => {
+                    if (downloadURL) {
+                        const a = document.createElement('a');
+                        a.href = downloadURL
+                        a.download = 'letter.pdf';
+                        a.click();
+                    }
+                    downloadURL = undefined;
+                }}
+                disabled={!downloadURL}
+                >Download PDF</Button>
+            </div>
+        </div>
+        <Separator />
+        <Help />
     </form>
 </div>
 
+<AlertDialog.Root open={isLoading} preventScroll={true} closeOnEscape={false} closeOnOutsideClick={false}>
+    <AlertDialog.Content class="loading-dialog">
+        <AlertDialog.Header>
+            <AlertDialog.Title>Loading...</AlertDialog.Title>
+            <AlertDialog.Description class="loading-circle">
+                <Circle color="#000000" size="30"/>
+            </AlertDialog.Description>
+        </AlertDialog.Header>
+    </AlertDialog.Content>
+</AlertDialog.Root>
 
 <AlertDialog.Root open={errorDialogOpen} onOpenChange={() => {errorDialogOpen=!errorDialogOpen}}>
     <AlertDialog.Content>

@@ -13,6 +13,7 @@ import {LetterConfigModelLogoEnum} from "../api";
 import Vorstand from "$lib/Vorstand.svelte";
 import DatePicker from "$lib/components/DatePicker.svelte";
 import BankingInformation from "$lib/BankingInformation.svelte";
+import {CircleX} from "lucide-svelte";
 
 let { formData = $bindable() }: {formData: LetterConfigModel} = $props();
 
@@ -46,6 +47,19 @@ function getLogo(v: string | unknown): LetterConfigModelLogoEnum {
                     <DatePicker bind:value={formData.date} />
                 </div>
                 <Separator />
+                <div class="form-checkbox">
+                    <Checkbox id="frontpage" bind:checked={formData.includeFrontPage} aria-labelledby="frontpage-label" />
+                    <Label id="frontpage-label" for="frontpage">Titelseite anfügen</Label>
+                </div>
+                <div class="form-checkbox">
+                    <Checkbox id="holidaylaw" bind:checked={formData.includeHolidayLawPage} aria-labelledby="holidaylaw-label" />
+                    <Label id="holidaylaw-label" for="holidaylaw">Urlaubsgesetz anfügen</Label>
+                </div>
+                <div class="form-checkbox">
+                    <Checkbox id="abroad" bind:checked={formData.signUpIncludeAbroadClause} aria-labelledby="abroad-label" />
+                    <Label id="abroad-label" for="abroad">Auslandslager?</Label>
+                </div>
+                <Separator />
                 <div class="input-label">
                     <Label for="organizationName">Stammes Name</Label>
                     <Input placeholder="Stammes Name" bind:value={formData.organizationName} />
@@ -73,19 +87,22 @@ function getLogo(v: string | unknown): LetterConfigModelLogoEnum {
                         </Select.Content>
                     </Select.Root>
                 </div>
-                <Separator />
-                <div class="form-checkbox">
-                    <Checkbox id="frontpage" bind:checked={formData.includeFrontPage} aria-labelledby="frontpage-label" />
-                    <Label id="frontpage-label" for="frontpage">Titelseite anfügen</Label>
+                <div class="input-container">
+                    {#if formData.website !== undefined}
+                        <div class="input-label">
+                            <Label for="website">Website</Label>
+                            <div class="input-with-remove">
+                                <Input placeholder="Website" bind:value={formData.website} />
+                                <Button variant="ghost" size="sm" on:click={() => {formData.website = undefined}} class="remove-button">
+                                    <CircleX class="h-4 w-4" />
+                                </Button>
+                            </div>
+                        </div>
+                    {:else}
+                        <Button variant="secondary" on:click={() => {formData.website = ""}}>Add website</Button>
+                    {/if}
                 </div>
-                <div class="form-checkbox">
-                    <Checkbox id="holidaylaw" bind:checked={formData.includeHolidayLawPage} aria-labelledby="holidaylaw-label" />
-                    <Label id="holidaylaw-label" for="holidaylaw">Urlaubsgesetz anfügen</Label>
-                </div>
-                <div class="form-checkbox">
-                    <Checkbox id="abroad" bind:checked={formData.signUpIncludeAbroadClause} aria-labelledby="abroad-label" />
-                    <Label id="abroad-label" for="abroad">Auslandslager?</Label>
-                </div>
+
                 <Separator />
                 <Vorstand bind:formData={formData} />
                 <Separator />

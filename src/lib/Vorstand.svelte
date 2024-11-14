@@ -65,13 +65,28 @@
                             </Select.Content>
                         </Select.Root>
                     </div>
+                    {#if person.phone !== undefined}
+                        <div class="input-label">
+                            <Label for="phone">Telefon</Label>
+                            <div class="input-with-remove">
+                                <Input placeholder="Telefon" bind:value={person.phone} />
+                                <Button variant="ghost" size="sm" on:click={() => {person.phone = undefined}} class="remove-button">
+                                    <CircleX class="h-4 w-4" />
+                                </Button>
+                            </div>
+                        </div>
+                    {:else}
+                        <Button variant="secondary" on:click={() => {person.phone = ""}}>Add Phone</Button>
+                    {/if}
                 </Card.Content>
             </Card.Root>
         </Collapsible.Content>
     {/each}
     {#if formData.people.length < 3}
         <Collapsible.Content>
-            <Button on:click={addPerson}>Add</Button>
+            <div class="flex justify-center" style="margin-top: 1rem;">
+                <Button variant="secondary" on:click={addPerson}>Add</Button>
+            </div>
         </Collapsible.Content>
     {/if}
 </Collapsible.Root>

@@ -110,6 +110,12 @@ export interface LetterConfigModel {
     'organizationName': string;
     /**
      * 
+     * @type {string}
+     * @memberof LetterConfigModel
+     */
+    'website'?: string;
+    /**
+     * 
      * @type {Array<Vorstand>}
      * @memberof LetterConfigModel
      */
@@ -125,7 +131,7 @@ export interface LetterConfigModel {
      * @type {string}
      * @memberof LetterConfigModel
      */
-    'date'?: string;
+    'date': string;
     /**
      * 
      * @type {string}
@@ -136,7 +142,8 @@ export interface LetterConfigModel {
 
 export const LetterConfigModelLogoEnum = {
     Dpsg: 'DPSG',
-    Langenbach: 'Langenbach'
+    Langenbach: 'Langenbach',
+    Moosburg: 'Moosburg'
 } as const;
 
 export type LetterConfigModelLogoEnum = typeof LetterConfigModelLogoEnum[keyof typeof LetterConfigModelLogoEnum];
@@ -165,6 +172,12 @@ export interface Vorstand {
      * @memberof Vorstand
      */
     'email': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Vorstand
+     */
+    'phone'?: string;
 }
 
 export const VorstandRoleEnum = {
@@ -183,6 +196,35 @@ export type VorstandRoleEnum = typeof VorstandRoleEnum[keyof typeof VorstandRole
  */
 export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1HealthGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/health`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @param {LetterConfigModel} letterConfigModel 
@@ -288,6 +330,17 @@ export const DefaultApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiV1HealthGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1HealthGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.apiV1HealthGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {LetterConfigModel} letterConfigModel 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -332,6 +385,14 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1HealthGet(options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.apiV1HealthGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {LetterConfigModel} letterConfigModel 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -365,6 +426,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
  * @extends {BaseAPI}
  */
 export class DefaultApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public apiV1HealthGet(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).apiV1HealthGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {LetterConfigModel} letterConfigModel 

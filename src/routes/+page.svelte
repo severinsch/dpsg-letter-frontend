@@ -67,6 +67,7 @@
                 <Select.Group>
                     <Select.Item value="Langenbach">Langenbach</Select.Item>
                     <Select.Item value="Freising">Freising</Select.Item>
+                    <Select.Item value="Moosburg">Moosburg</Select.Item>
                     <Select.Item value="Custom">None</Select.Item>
                 </Select.Group>
             </Select.Content>

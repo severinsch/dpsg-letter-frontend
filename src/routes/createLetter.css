@@ -147,3 +147,12 @@ form > * {
     border-radius: 4px;
     display: block;
 }
+
+ .input-with-remove {
+     display: flex;
+     align-items: center;
+ }
+
+.remove-button {
+    margin-left: 0.5rem;
+}

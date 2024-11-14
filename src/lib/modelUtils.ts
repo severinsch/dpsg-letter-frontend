@@ -70,7 +70,7 @@ export const emptyModel: LetterConfigModel = {
         iban: "",
         orgName: "",
     },
-    date: undefined,
+    date: new Date().toISOString().split('T')[0],
     includeFrontPage: true,
     includeHolidayLawPage: false,
     includeSignUp: false,
@@ -82,7 +82,13 @@ export const emptyModel: LetterConfigModel = {
 export function applyTemplate(templateName: string | unknown, formData: LetterConfigModel): LetterConfigModel {
     if (typeof templateName !== "string") return formData;
     const selectedTemplate = templates[templateName] || {};
-    return {...formData, ...selectedTemplate};
+    return {
+        ...emptyModel,
+        ...selectedTemplate,
+        content: formData.content,
+        title: formData.title,
+        includeSignUp: formData.includeSignUp,
+    }
 }
 
 const langenbachTemplate: Partial<LetterConfigModel> = {
@@ -94,15 +100,12 @@ const langenbachTemplate: Partial<LetterConfigModel> = {
         {name: "REDACTED", role: "Vorstaendin", email: "REDACTED"},
         {name: "REDACTED", role: "Kurat", email: "REDACTED"},
     ],
-    includeHolidayLawPage: false,
-    signUpIncludeAbroadClause: false,
-    includeFrontPage: true,
-    address: "Pfarrstraße 2, 85416\nLangenbach",
+    address: "REDACTED",
     bankInformation: {
         orgName: "DPSG Stamm Wolfsspur",
         iban: "REDACTED",
         bankName: "Sparkasse Freising Moosburg",
-    }
+    },
 };
 
 const freisingTemplate: Partial<LetterConfigModel> = {
@@ -113,15 +116,29 @@ const freisingTemplate: Partial<LetterConfigModel> = {
         {name: "REDACTED", role: "Vorstaendin", email: "REDACTED"},
         {name: "REDACTED", role: "Vorstand", email: "REDACTED"},
     ],
-    includeHolidayLawPage: false,
-    signUpIncludeAbroadClause: false,
-    includeFrontPage: true,
     address: "REDACTED",
     bankInformation: {
         orgName: "DPSG Freising",
         iban: "REDACTED",
         bankName: "Sparkasse Freising Moosburg",
-    }
+    },
+    website: "dpsg-freising.de"
+}
+
+const moosburgTemplate: Partial<LetterConfigModel> = {
+    logo: "Moosburg",
+    organizationName: "DPSG Stamm St. Kastulus",
+    place: "Moosburg",
+    people: [
+        {name: "REDACTED", role: "Vorstand", email: "REDACTED", phone: "REDACTED"},
+        {name: "REDACTED", role: "Vorstaendin", email: "REDACTED", phone: "REDACTED"},
+    ],
+    address: "REDACTED",
+    bankInformation: {
+        orgName: "DPSG Moosburg",
+        iban: "REDACTED",
+        bankName: "Sparkasse Freising Moosburg",
+    },
 }
 
 const defaultTemplate: Partial<LetterConfigModel> = {
@@ -132,5 +149,6 @@ const defaultTemplate: Partial<LetterConfigModel> = {
 const templates: { [key: string]: Partial<LetterConfigModel> } = {
     Langenbach: langenbachTemplate,
     Freising: freisingTemplate,
+    Moosburg: moosburgTemplate,
     Custom: defaultTemplate,
 };

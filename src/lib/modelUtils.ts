@@ -1,4 +1,13 @@
 import type {LetterConfigModel} from "../api";
+import templateConfigUntyped from "../config/templates.json";
+
+interface TemplateConfig {
+    langenbach: Partial<LetterConfigModel>;
+    freising: Partial<LetterConfigModel>;
+    moosburg: Partial<LetterConfigModel>;
+}
+
+const templateConfig: TemplateConfig = templateConfigUntyped as TemplateConfig;
 
 function getNestedValue(obj: object, compositeKey: string): any {
     return compositeKey.split('.').reduce((acc, key) => {
@@ -91,55 +100,10 @@ export function applyTemplate(templateName: string | unknown, formData: LetterCo
     }
 }
 
-const langenbachTemplate: Partial<LetterConfigModel> = {
-    logo: "Langenbach",
-    organizationName: "DPSG Stamm Wolfsspur",
-    place: "Langenbach",
-    people: [
-        {name: "REDACTED", role: "Vorstand", email: "REDACTED"},
-        {name: "REDACTED", role: "Vorstaendin", email: "REDACTED"},
-        {name: "REDACTED", role: "Kurat", email: "REDACTED"},
-    ],
-    address: "REDACTED",
-    bankInformation: {
-        orgName: "DPSG Stamm Wolfsspur",
-        iban: "REDACTED",
-        bankName: "Sparkasse Freising Moosburg",
-    },
-};
-
-const freisingTemplate: Partial<LetterConfigModel> = {
-    logo: "DPSG",
-    organizationName: "DPSG Freising",
-    place: "Freising",
-    people: [
-        {name: "REDACTED", role: "Vorstaendin", email: "REDACTED"},
-        {name: "REDACTED", role: "Vorstand", email: "REDACTED"},
-    ],
-    address: "REDACTED",
-    bankInformation: {
-        orgName: "DPSG Freising",
-        iban: "REDACTED",
-        bankName: "Sparkasse Freising Moosburg",
-    },
-    website: "dpsg-freising.de"
-}
-
-const moosburgTemplate: Partial<LetterConfigModel> = {
-    logo: "Moosburg",
-    organizationName: "DPSG Stamm St. Kastulus",
-    place: "Moosburg",
-    people: [
-        {name: "REDACTED", role: "Vorstand", email: "REDACTED", phone: "REDACTED"},
-        {name: "REDACTED", role: "Vorstaendin", email: "REDACTED", phone: "REDACTED"},
-    ],
-    address: "REDACTED",
-    bankInformation: {
-        orgName: "DPSG Moosburg",
-        iban: "REDACTED",
-        bankName: "Sparkasse Freising Moosburg",
-    },
-}
+// this is temporary until proper authentication and user management is implemented
+const langenbachTemplate = templateConfig["langenbach"]
+const freisingTemplate = templateConfig["freising"]
+const moosburgTemplate = templateConfig["moosburg"]
 
 const defaultTemplate: Partial<LetterConfigModel> = {
     logo: "DPSG",

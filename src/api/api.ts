@@ -125,7 +125,7 @@ export interface LetterConfigModel {
      * @type {BankInformation}
      * @memberof LetterConfigModel
      */
-    'bankInformation': BankInformation;
+    'bankInformation'?: BankInformation;
     /**
      * 
      * @type {string}

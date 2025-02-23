@@ -23,6 +23,10 @@ export function validateModel(formData: LetterConfigModel): string | null {
     for (const field of requiredFields) {
         const value = getNestedValue(formData, field);
         if (!value) {
+            // require e.g. bankInformation.bankName only if bankInformation is present
+            if(field.includes(".") && formData[field.split(".").at(0) as keyof LetterConfigModel] == null) {
+                continue
+            }
             const missingName = getNestedValue(fieldMapping, field);
             return `"${missingName}" is required`;
         }
@@ -61,6 +65,7 @@ const requiredFields = [
     "organizationName",
     "place",
     "address",
+    // bankInformation is optional, but if it is present all sub fields are required
     "bankInformation.bankName",
     "bankInformation.iban",
     "bankInformation.orgName",

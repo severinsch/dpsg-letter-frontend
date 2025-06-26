@@ -1,5 +1,5 @@
 # stage build
-FROM node:23
+FROM node:24
 
 WORKDIR /app
 
@@ -17,7 +17,7 @@ RUN npm run build
 
 
 # stage run
-FROM node:23
+FROM node:24
 
 WORKDIR /app
 

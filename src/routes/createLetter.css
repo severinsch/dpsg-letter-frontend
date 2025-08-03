@@ -156,3 +156,15 @@ form > * {
 .remove-button {
     margin-left: 0.5rem;
 }
+
+.select-item-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.select-item-thumbnail {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    border-radius: 4px;
+}

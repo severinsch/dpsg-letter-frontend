@@ -8,7 +8,7 @@ import {ScrollArea} from "$lib/components/ui/scroll-area";
 
 import * as Select from "$lib/components/ui/select/index.js";
 import * as Sheet from "$lib/components/ui/sheet/index.js";
-import {type LetterConfigModel} from "../api";
+import {DefaultApi, type LetterConfigModel} from "../api";
 import {LetterConfigModelLogoEnum} from "../api";
 import Vorstand from "$lib/Vorstand.svelte";
 import DatePicker from "$lib/components/DatePicker.svelte";
@@ -22,9 +22,44 @@ function getLogo(v: string | unknown): LetterConfigModelLogoEnum {
     switch (v) {
         case "Langenbach": return "Langenbach";
         case "DPSG": return "DPSG";
+        case "Moosburg": return "Moosburg";
         default: return "DPSG";
     }
 }
+
+let logoUrlMap = $state(new Map<string, string>());
+
+let apiClient = new DefaultApi();
+
+// fetch logos once and store them in browser
+// for each Drawer open/Select open a blob: URL call to get the cached image is done
+$effect(() => {
+    const logosToFetch = Object.values(LetterConfigModelLogoEnum);
+
+    const fetchPromises = logosToFetch.map(async (logo) => {
+        try {
+            const response = await apiClient.apiV1InfoLogoOrgNameGet(logo, { responseType: 'blob' });
+            const url = URL.createObjectURL(response.data as Blob);
+            return [logo, url];
+        } catch (error) {
+            console.error(`Failed to fetch logo for ${logo}:`, error);
+            return null;
+        }
+    });
+
+    Promise.all(fetchPromises).then(results => {
+        logoUrlMap = new Map(results.filter(r => r !== null) as [string, string][]);
+    });
+
+    // return cleanup function
+    return () => {
+        console.log("Cleaning up logo object URLs...");
+        for (const url of logoUrlMap.values()) {
+            URL.revokeObjectURL(url);
+        }
+    };
+});
+
 </script>
 
 <Sheet.Root>
@@ -76,12 +111,24 @@ function getLogo(v: string | unknown): LetterConfigModelLogoEnum {
                     label: formData.logo
                 }} onSelectedChange={(v) => v && (formData.logo = getLogo(v.value))}>
                         <Select.Trigger class="w-[180px]">
-                            <Select.Value placeholder="Logo" />
+                            <div class="select-item-content">
+                                {#if formData.logo && logoUrlMap.has(formData.logo)}
+                                    <img src={logoUrlMap.get(formData.logo)} alt="{formData.logo} Logo" class="select-item-thumbnail" />
+                                {/if}
+                                <Select.Value placeholder="Logo" />
+                            </div>
                         </Select.Trigger>
                         <Select.Content>
                             <Select.Group>
                                 {#each Object.values(LetterConfigModelLogoEnum) as logo}
-                                    <Select.Item value={logo}>{logo}</Select.Item>
+                                    <Select.Item value={logo} label={logo}>
+                                        <div class="select-item-content">
+                                            {#if logoUrlMap.has(logo)}
+                                                <img src={logoUrlMap.get(logo)} alt="{logo} Logo" class="select-item-thumbnail" />
+                                            {/if}
+                                            <span>{logo}</span>
+                                        </div>
+                                    </Select.Item>
                                 {/each}
                             </Select.Group>
                         </Select.Content>

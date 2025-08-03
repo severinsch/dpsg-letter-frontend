@@ -71,25 +71,25 @@ export interface LetterConfigModel {
      * @type {boolean}
      * @memberof LetterConfigModel
      */
-    'includeSignUp'?: boolean;
+    'includeSignUp': boolean;
     /**
      * 
      * @type {boolean}
      * @memberof LetterConfigModel
      */
-    'signUpIncludeAbroadClause'?: boolean;
+    'signUpIncludeAbroadClause': boolean;
     /**
      * 
      * @type {boolean}
      * @memberof LetterConfigModel
      */
-    'includeFrontPage'?: boolean;
+    'includeFrontPage': boolean;
     /**
      * 
      * @type {boolean}
      * @memberof LetterConfigModel
      */
-    'includeHolidayLawPage'?: boolean;
+    'includeHolidayLawPage': boolean;
     /**
      * 
      * @type {string}
@@ -227,6 +227,39 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {string} orgName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1InfoLogoOrgNameGet: async (orgName: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgName' is not null or undefined
+            assertParamExists('apiV1InfoLogoOrgNameGet', 'orgName', orgName)
+            const localVarPath = `/api/v1/info/logo/{orgName}`
+                .replace(`{${"orgName"}}`, encodeURIComponent(String(orgName)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {LetterConfigModel} letterConfigModel 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -260,64 +293,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        protectedRouteBasicGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/protected/route/basic`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        protectedRouteFormGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/protected/route/form`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -341,6 +316,18 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} orgName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiV1InfoLogoOrgNameGet(orgName: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1InfoLogoOrgNameGet(orgName, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.apiV1InfoLogoOrgNameGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {LetterConfigModel} letterConfigModel 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -349,28 +336,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1LetterPost(letterConfigModel, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.apiV1LetterPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async protectedRouteBasicGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.protectedRouteBasicGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.protectedRouteBasicGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async protectedRouteFormGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.protectedRouteFormGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.protectedRouteFormGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -393,28 +358,21 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @param {string} orgName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1InfoLogoOrgNameGet(orgName: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.apiV1InfoLogoOrgNameGet(orgName, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {LetterConfigModel} letterConfigModel 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         apiV1LetterPost(letterConfigModel: LetterConfigModel, options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.apiV1LetterPost(letterConfigModel, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        protectedRouteBasicGet(options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.protectedRouteBasicGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        protectedRouteFormGet(options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.protectedRouteFormGet(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -438,6 +396,17 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
+     * @param {string} orgName 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public apiV1InfoLogoOrgNameGet(orgName: string, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).apiV1InfoLogoOrgNameGet(orgName, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {LetterConfigModel} letterConfigModel 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -445,26 +414,6 @@ export class DefaultApi extends BaseAPI {
      */
     public apiV1LetterPost(letterConfigModel: LetterConfigModel, options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).apiV1LetterPost(letterConfigModel, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public protectedRouteBasicGet(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).protectedRouteBasicGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public protectedRouteFormGet(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).protectedRouteFormGet(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

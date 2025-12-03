@@ -18,12 +18,8 @@ import * as Accordion from "$lib/components/ui/accordion";
                     </thead>
                     <tbody>
                     <tr>
-                        <td><code>**bold text**</code></td>
-                        <td><strong>bold text</strong></td>
-                    </tr>
-                    <tr>
-                        <td><code>*italic text*</code></td>
-                        <td><em>italic text</em></td>
+                        <td><code>**bold** and *italic*<br>__bold__ and _italic_</code></td>
+                        <td><strong>bold</strong> and <em>italic</em></td>
                     </tr>
                     <tr>
                         <td>
@@ -60,6 +56,20 @@ import * as Accordion from "$lib/components/ui/accordion";
                                 </tbody>
                             </table>
                         </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>## Zwischenüberschrift &#123-&#125</code>
+                            <small>Different levels from # down to ###</small>
+                        </td>
+                        <td><h2>Zwischenüberschrift</h2></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>@sev und @Max_Mustermann</code>
+                            <small>Consistent colors: Same name => same color.</small>
+                        </td>
+                        <td><span style="background-color:rgba(33,220,229,0.7)">sev</span> und <span style="background-color:rgba(229,89,184,0.7)">Max Mustermann</span></td>
                     </tr>
                     </tbody>
                 </table>

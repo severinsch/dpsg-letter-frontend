@@ -33,7 +33,7 @@
                 <Card.Header>
                     <div class="flex items-center justify-between space-x-4 px-4">
                         <Card.Title>Person {index + 1}</Card.Title>
-                        <Button variant="ghost" size="sm" on:click={() => formData.people.splice(index, 1)}>
+                        <Button variant="ghost" size="sm" onclick={() => formData.people.splice(index, 1)}>
                             <CircleX class="h-4 w-4" />
                         </Button>
                     </div>
@@ -49,12 +49,9 @@
                     </div>
                     <div class="input-label">
                         <Label for="role">Rolle</Label>
-                        <Select.Root selected={{
-                                value: person.role,
-                                label: person.role
-                            }} onSelectedChange={(v) => v && (person.role = v.value)}>
+                        <Select.Root type="single" value={person.role} onValueChange={(v: string) => (person.role = v as VorstandRoleEnum)}>
                             <Select.Trigger class="w-[180px]">
-                                <Select.Value placeholder="Rolle" />
+                                {person.role || "Rolle"}
                             </Select.Trigger>
                             <Select.Content>
                                 <Select.Group>
@@ -70,13 +67,13 @@
                             <Label for="phone">Telefon</Label>
                             <div class="input-with-remove">
                                 <Input placeholder="Telefon" bind:value={person.phone} />
-                                <Button variant="ghost" size="sm" on:click={() => {person.phone = undefined}} class="remove-button">
+                                <Button variant="ghost" size="sm" onclick={() => {person.phone = undefined}} class="remove-button">
                                     <CircleX class="h-4 w-4" />
                                 </Button>
                             </div>
                         </div>
                     {:else}
-                        <Button variant="secondary" on:click={() => {person.phone = ""}}>Add Phone</Button>
+                        <Button variant="secondary" onclick={() => {person.phone = ""}}>Add Phone</Button>
                     {/if}
                 </Card.Content>
             </Card.Root>
@@ -85,7 +82,7 @@
     {#if formData.people.length < 3}
         <Collapsible.Content>
             <div class="flex justify-center" style="margin-top: 1rem;">
-                <Button variant="secondary" on:click={addPerson}>Add</Button>
+                <Button variant="secondary" onclick={addPerson}>Add</Button>
             </div>
         </Collapsible.Content>
     {/if}

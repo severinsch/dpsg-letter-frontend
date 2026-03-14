@@ -1,37 +1,22 @@
 # stage build
-FROM node:24
+FROM oven/bun:1 AS build
 
 WORKDIR /app
 
-# copy everything to the container
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+
 COPY . .
-
-# clean install all dependencies
-RUN npm ci
-
-# remove potential security issues
-#RUN npm audit fix
-
-# build SvelteKit app
-RUN npm run build
+RUN bun run build
 
 
 # stage run
-FROM node:24
+FROM node:24-slim
 
 WORKDIR /app
 
-# copy dependency list
-COPY --from=0 /app/package*.json ./
-
-# clean install dependencies, no devDependencies, no prepare script
-RUN npm ci --production --ignore-scripts
-
-# remove potential security issues
-# RUN npm audit fix
-
-# copy built SvelteKit app to /app
-COPY --from=0 /app/build ./
+COPY --from=build /app/build ./
+COPY --from=build /app/package.json ./
 
 EXPOSE 3000
 CMD ["node", "./index.js"]

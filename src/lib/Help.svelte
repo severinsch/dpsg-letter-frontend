@@ -4,7 +4,7 @@ import * as Popover from "$lib/components/ui/popover";
 import * as Accordion from "$lib/components/ui/accordion";
 </script>
 
-<Accordion.Root class="w-full">
+<Accordion.Root type="single" class="w-full">
     <Accordion.Item value="item-1">
         <Accordion.Trigger>Show Content Formatting Rules</Accordion.Trigger>
         <Accordion.Content>

@@ -63,8 +63,10 @@ $effect(() => {
 </script>
 
 <Sheet.Root>
-    <Sheet.Trigger asChild let:builder>
-        <Button builders={[builder]} variant="secondary">Show More</Button>
+    <Sheet.Trigger>
+        {#snippet child({ props })}
+            <Button {...props} variant="secondary">Show More</Button>
+        {/snippet}
     </Sheet.Trigger>
     <Sheet.Content side="right">
         <ScrollArea class="scroll-area">
@@ -106,16 +108,13 @@ $effect(() => {
 
                 <div class="input-label">
                     <Label for="logo">Logo</Label>
-                    <Select.Root selected={{
-                    value: formData.logo,
-                    label: formData.logo
-                }} onSelectedChange={(v) => v && (formData.logo = getLogo(v.value))}>
+                    <Select.Root type="single" value={formData.logo} onValueChange={(v: string) => (formData.logo = getLogo(v))}>
                         <Select.Trigger class="w-[180px]">
                             <div class="select-item-content">
                                 {#if formData.logo && logoUrlMap.has(formData.logo)}
                                     <img src={logoUrlMap.get(formData.logo)} alt="{formData.logo} Logo" class="select-item-thumbnail" />
                                 {/if}
-                                <Select.Value placeholder="Logo" />
+                                {formData.logo || "Logo"}
                             </div>
                         </Select.Trigger>
                         <Select.Content>
@@ -140,13 +139,13 @@ $effect(() => {
                             <Label for="website">Website</Label>
                             <div class="input-with-remove">
                                 <Input placeholder="Website" bind:value={formData.website} />
-                                <Button variant="ghost" size="sm" on:click={() => {formData.website = undefined}} class="remove-button">
+                                <Button variant="ghost" size="sm" onclick={() => {formData.website = undefined}} class="remove-button">
                                     <CircleX class="h-4 w-4" />
                                 </Button>
                             </div>
                         </div>
                     {:else}
-                        <Button variant="secondary" on:click={() => {formData.website = ""}}>Add website</Button>
+                        <Button variant="secondary" onclick={() => {formData.website = ""}}>Add website</Button>
                     {/if}
                 </div>
 
@@ -156,8 +155,10 @@ $effect(() => {
                 <BankingInformation bind:formData={formData} />
             </form>
             <Sheet.Footer>
-                <Sheet.Close asChild let:builder>
-                    <Button builders={[builder]}>Close</Button>
+                <Sheet.Close>
+                    {#snippet child({ props })}
+                        <Button {...props}>Close</Button>
+                    {/snippet}
                 </Sheet.Close>
             </Sheet.Footer>
         </ScrollArea>

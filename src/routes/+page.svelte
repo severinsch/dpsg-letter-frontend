@@ -25,6 +25,7 @@
     let errorDialogOpen = $state(false);
     let errorDialogMessage = $state("");
     let isLoading = $state(false);
+    let selectedTemplate = $state("");
 
     function showErrorMessage(message: string) {
         errorDialogMessage = message;
@@ -59,9 +60,9 @@
     <h1>Create Letter</h1>
 
     <div class="header-controls">
-        <Select.Root onSelectedChange={(v) => v && (formData = applyTemplate(v.value, formData))}>
+        <Select.Root type="single" onValueChange={(v: string) => { selectedTemplate = v; formData = applyTemplate(v, formData); }}>
             <Select.Trigger class="w-[180px]">
-                <Select.Value placeholder="Select a template" />
+                {selectedTemplate || "Select a template"}
             </Select.Trigger>
             <Select.Content>
                 <Select.Group>
@@ -89,7 +90,7 @@
         <div class="button-group">
             <div class="left-buttons">
                 <Button type="submit">Submit</Button>
-                <Button type="button" on:click={() => {
+                <Button type="button" onclick={() => {
                     if (downloadURL) {
                         const a = document.createElement('a');
                         a.href = downloadURL
@@ -107,7 +108,7 @@
     </form>
 </div>
 
-<AlertDialog.Root open={isLoading} preventScroll={true} closeOnEscape={false} closeOnOutsideClick={false}>
+<AlertDialog.Root open={isLoading}>
     <AlertDialog.Content class="loading-dialog">
         <AlertDialog.Header>
             <AlertDialog.Title>Loading...</AlertDialog.Title>

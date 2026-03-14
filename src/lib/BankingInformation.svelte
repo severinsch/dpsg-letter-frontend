@@ -28,7 +28,7 @@
     {#if formData.bankInformation === undefined || formData.bankInformation == null}
         <Collapsible.Content>
             <div class="flex justify-center" style="margin-top: 1rem;">
-                <Button variant="secondary" on:click={addBankInformation}>Add</Button>
+                <Button variant="secondary" onclick={addBankInformation}>Add</Button>
             </div>
         </Collapsible.Content>
     {:else}
@@ -37,7 +37,7 @@
                 <Card.Header>
                     <div class="flex items-center justify-between space-x-4 px-4">
                         <Card.Title>Konto</Card.Title>
-                        <Button variant="ghost" size="sm" on:click={() => formData.bankInformation = undefined}>
+                        <Button variant="ghost" size="sm" onclick={() => formData.bankInformation = undefined}>
                             <CircleX class="h-4 w-4" />
                         </Button>
                     </div>

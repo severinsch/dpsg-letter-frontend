@@ -15,6 +15,7 @@
     import {applyTemplate, emptyModel, validateModel} from "$lib/modelUtils";
     import Drawer from "$lib/Drawer.svelte";
     import Help from "$lib/Help.svelte";
+    import MarkdownPreview from "$lib/MarkdownPreview.svelte";
 
     let apiClient = new DefaultApi();
 
@@ -56,6 +57,7 @@
     }
 </script>
 
+<div class="page-layout">
 <div class="container">
     <h1>Create Letter</h1>
 
@@ -106,6 +108,12 @@
         <Separator />
         <Help />
     </form>
+</div>
+
+<div class="preview-panel">
+    <h2 class="preview-title">Content Preview</h2>
+    <MarkdownPreview content={formData.content} />
+</div>
 </div>
 
 <AlertDialog.Root open={isLoading}>

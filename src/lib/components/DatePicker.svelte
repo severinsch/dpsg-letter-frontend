@@ -15,7 +15,12 @@
     let date: DateValue | undefined = $state(value ? toCalendarDate(value) : today(getLocalTimeZone()));
 
     function toCalendarDate(date: Date): DateValue {
-        return parseDate(date.toISOString().split("T")[0]);
+        const calDate = parseDate(date.toISOString().split("T")[0]);
+        return calDate;
+    }
+
+    function toJSDate(date: DateValue): Date {
+        return new Date(Date.UTC(date.year, date.month - 1, date.day));
     }
 
     function formatDate(date: DateValue): string {
@@ -41,6 +46,6 @@
         {/snippet}
     </Popover.Trigger>
     <Popover.Content class="w-auto p-0">
-        <Calendar type="single" bind:value={date} onValueChange={(v: typeof date) => v && (value = v.toDate(getLocalTimeZone()))} />
+        <Calendar type="single" bind:value={date} onValueChange={(v: typeof date) => v && (value = toJSDate(v))} />
     </Popover.Content>
 </Popover.Root>

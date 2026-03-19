@@ -1,8 +1,8 @@
-.gitignore
-.npmignore
-api.ts
-base.ts
-common.ts
-configuration.ts
-git_push.sh
+apis/DefaultApi.ts
+apis/index.ts
 index.ts
+models/BankInformation.ts
+models/LetterConfigModel.ts
+models/Vorstand.ts
+models/index.ts
+runtime.ts

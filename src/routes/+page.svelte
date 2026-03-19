@@ -41,15 +41,15 @@
                 return;
             }
             isLoading = true;
-            const response = await apiClient.apiV1LetterPost(formData, {responseType: "blob"});
+            const response = await apiClient.apiV1LetterPostRaw({letterConfigModel: formData});
             isLoading = false;
-            if (response.status !== 200) {
-                showErrorMessage(`API Error: ${response.status} ${response.statusText} (${response.data})`);
+            if (response.raw.status !== 200) {
+                showErrorMessage(`API Error: ${response.raw.status} ${response.raw.statusText}`);
             }
-            if (response.headers['content-type'] !== 'application/pdf' || !response.data) {
+            const blob = await response.value()
+            if (response.raw.headers.get('content-type') !== 'application/pdf' || !blob) {
                 showErrorMessage('API Error: Invalid response');
             }
-            const blob = response.data as Blob;
             downloadURL = URL.createObjectURL(blob);
         } catch (error) {
             showErrorMessage(`API Error: ${error}`);

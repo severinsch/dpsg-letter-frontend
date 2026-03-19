@@ -1,0 +1,191 @@
+openapi: "3.1.0"
+info:
+  title: "letter_api API"
+  description: "letter_api API"
+  version: "1.0.0"
+servers:
+- url: "https://letter.dpsg-langenbach.de"
+paths:
+  /api/v1/health:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "OK"
+  /api/v1/info/logo/{orgName}:
+    get:
+      description: ""
+      parameters:
+        - name: "orgName"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Missing organization name"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+                Example#2:
+                  value: ""
+        "500":
+          description: "Internal Server Error"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+        "200":
+          description: "OK <br> A file response"
+          content:
+            image/jpeg:
+              schema:
+                type: "string"
+                format: "binary"
+  /api/v1/letter:
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LetterConfigModel"
+        required: true
+      responses:
+        "500":
+          description: "Internal Server Error"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK <br> A file response"
+          content:
+            application/pdf:
+              schema:
+                type: "string"
+                format: "binary"
+        "400":
+          description: "Bad Request <br> TODO how to catch and add info?"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+components:
+  schemas:
+    Vorstand:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        role:
+          type: "string"
+          enum:
+            - "Vorstand"
+            - "Vorstaendin"
+            - "Kurat"
+            - "Kuratin"
+        email:
+          type: "string"
+        phone:
+          type: "string"
+          nullable: true
+      required:
+        - "name"
+        - "role"
+        - "email"
+    BankInformation:
+      type: "object"
+      properties:
+        orgName:
+          type: "string"
+        bankName:
+          type: "string"
+        iban:
+          type: "string"
+      required:
+        - "orgName"
+        - "bankName"
+        - "iban"
+    LetterConfigModel:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+        content:
+          type: "string"
+        includeSignUp:
+          type: "boolean"
+        includeTableOfContents:
+          type: "boolean"
+        signUpIncludeAbroadClause:
+          type: "boolean"
+        includeFrontPage:
+          type: "boolean"
+        includeHolidayLawPage:
+          type: "boolean"
+        place:
+          type: "string"
+        address:
+          type: "string"
+        organizationName:
+          type: "string"
+        website:
+          type: "string"
+          nullable: true
+        people:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Vorstand"
+        bankInformation:
+          nullable: true
+          $ref: "#/components/schemas/BankInformation"
+        date:
+          type: "string"
+          format: "date"
+        logo:
+          type: "string"
+          enum:
+            - "DPSG"
+            - "Langenbach"
+            - "Moosburg"
+      required:
+        - "title"
+        - "content"
+        - "includeSignUp"
+        - "includeTableOfContents"
+        - "signUpIncludeAbroadClause"
+        - "includeFrontPage"
+        - "includeHolidayLawPage"
+        - "place"
+        - "address"
+        - "organizationName"
+        - "people"
+        - "date"
+        - "logo"

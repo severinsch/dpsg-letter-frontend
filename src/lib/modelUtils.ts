@@ -84,10 +84,11 @@ export const emptyModel: LetterConfigModel = {
         iban: "",
         orgName: "",
     },
-    date: new Date().toISOString().split('T')[0],
+    date: new Date(),
     includeFrontPage: true,
     includeHolidayLawPage: false,
     includeSignUp: false,
+    includeTableOfContents: false,
     signUpIncludeAbroadClause: false,
     people: [],
 }

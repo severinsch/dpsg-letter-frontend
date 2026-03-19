@@ -11,8 +11,12 @@
         parseDate,
     } from "@internationalized/date";
 
-    let { value = $bindable() }: {value: string | undefined} = $props();
-    let date: DateValue | undefined = $state(value ? parseDate(value) : today(getLocalTimeZone()));
+    let { value = $bindable() }: {value: Date | undefined} = $props();
+    let date: DateValue | undefined = $state(value ? toCalendarDate(value) : today(getLocalTimeZone()));
+
+    function toCalendarDate(date: Date): DateValue {
+        return parseDate(date.toISOString().split("T")[0]);
+    }
 
     function formatDate(date: DateValue): string {
         // format to DD.MM.YYYY
@@ -37,6 +41,6 @@
         {/snippet}
     </Popover.Trigger>
     <Popover.Content class="w-auto p-0">
-        <Calendar type="single" bind:value={date} onValueChange={(v: typeof date) => v && (value = v.toString())} />
+        <Calendar type="single" bind:value={date} onValueChange={(v: typeof date) => v && (value = v.toDate(getLocalTimeZone()))} />
     </Popover.Content>
 </Popover.Root>

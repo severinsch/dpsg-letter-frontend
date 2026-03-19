@@ -38,8 +38,9 @@ $effect(() => {
 
     const fetchPromises = logosToFetch.map(async (logo) => {
         try {
-            const response = await apiClient.apiV1InfoLogoOrgNameGet(logo, { responseType: 'blob' });
-            const url = URL.createObjectURL(response.data as Blob);
+            const response = await apiClient.apiV1InfoLogoOrgNameGetRaw({ orgName: logo });
+            const blob = await response.value()
+            const url = URL.createObjectURL(blob);
             return [logo, url];
         } catch (error) {
             console.error(`Failed to fetch logo for ${logo}:`, error);

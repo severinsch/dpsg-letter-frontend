@@ -68,7 +68,7 @@ form > * {
     right: 0;
     display: flex;
     gap: 0.5rem;
-    margin: 1rem;
+    margin-bottom: 1rem;
 }
 
 .drawer {
@@ -121,6 +121,20 @@ form > * {
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 0.25rem;
+}
+
+.content-templates {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem !important;
+}
+
+.content-templates-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+    white-space: nowrap;
 }
 
 .button-group {

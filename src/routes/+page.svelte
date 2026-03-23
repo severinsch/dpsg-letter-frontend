@@ -13,6 +13,7 @@
     import {Circle} from 'svelte-loading-spinners';
     import "./createLetter.css";
     import {applyTemplate, emptyModel, validateModel} from "$lib/modelUtils";
+    import {contentTemplates, type ContentTemplate} from "$lib/contentTemplates";
     import Drawer from "$lib/Drawer.svelte";
     import Help from "$lib/Help.svelte";
     import MarkdownPreview from "$lib/MarkdownPreview.svelte";
@@ -27,6 +28,15 @@
     let errorDialogMessage = $state("");
     let isLoading = $state(false);
     let selectedTemplate = $state("");
+
+    function addToContent(text: string) {
+        formData.content += text;
+    }
+
+    function applyContentTemplate(template: ContentTemplate) {
+        formData.title = template.title;
+        addToContent(template.content);
+    }
 
     function showErrorMessage(message: string) {
         errorDialogMessage = message;
@@ -78,6 +88,15 @@
         <Drawer bind:formData={formData} />
     </div>
 
+    <div class="content-templates">
+        <span class="content-templates-label">Vorlage einfügen:</span>
+        {#each contentTemplates as template}
+            <Button type="button" variant="outline" size="sm" onclick={() => applyContentTemplate(template)}>
+                {template.label}
+            </Button>
+        {/each}
+    </div>
+
     <!-- Form fields -->
     <form onsubmit={submitForm}>
         <Input placeholder="Titel" bind:value={formData.title} />
@@ -86,6 +105,11 @@
         <div class="form-checkbox">
             <Checkbox id="singup" bind:checked={formData.includeSignUp} aria-labelledby="signup-label" />
             <Label id="signup-label" for="signup">Anmeldung anfügen</Label>
+        </div>
+
+        <div class="form-checkbox">
+            <Checkbox id="toc" bind:checked={formData.includeTableOfContents} aria-labelledby="toc-label" />
+            <Label id="toc-label" for="toc">Tagesordnung generieren</Label>
         </div>
 
         <Separator />

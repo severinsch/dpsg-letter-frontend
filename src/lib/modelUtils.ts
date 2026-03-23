@@ -103,6 +103,7 @@ export function applyTemplate(templateName: string | unknown, formData: LetterCo
         content: formData.content,
         title: formData.title,
         includeSignUp: formData.includeSignUp,
+        includeTableOfContents: formData.includeTableOfContents,
     }
 }
 

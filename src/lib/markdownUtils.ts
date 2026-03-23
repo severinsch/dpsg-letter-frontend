@@ -131,7 +131,8 @@ marked.use({
             return false;
         },
         heading({ text, depth }) {
-            const isUnnumbered = /\s*\{[^}]*\}\s*$/.test(text);
+            //const isUnnumbered = /\s*\{[^}]*\}\s*$/.test(text);
+            const isUnnumbered = true // TODO: figure out, whether we want to add numbering?
             const clean = text.replace(/\s*\{[^}]*\}\s*$/, '').trim();
             if (isUnnumbered) {
                 return `<h${depth}>${clean}</h${depth}>\n`;

@@ -60,7 +60,13 @@
             if (response.raw.headers.get('content-type') !== 'application/pdf' || !blob) {
                 showErrorMessage('API Error: Invalid response');
             }
+            if (downloadURL) URL.revokeObjectURL(downloadURL);
             downloadURL = URL.createObjectURL(blob);
+            // Auto-trigger download
+            const a = document.createElement('a');
+            a.href = downloadURL;
+            a.download = 'letter.pdf';
+            a.click();
         } catch (error: ResponseError | any) {
             if (error instanceof ResponseError) {
                 showErrorMessage(`API Error: ${error.response.status}: ${error.response.statusText} - ${await error.response.text() || 'No additional error message provided'}`);
@@ -74,23 +80,24 @@
 
 <div class="page-layout">
 <div class="container">
-    <h1>Create Letter</h1>
-
-    <div class="header-controls">
-        <Select.Root type="single" onValueChange={(v: string) => { selectedTemplate = v; formData = applyTemplate(v, formData); }}>
-            <Select.Trigger class="w-[180px]">
-                {selectedTemplate || "Select a template"}
-            </Select.Trigger>
-            <Select.Content>
-                <Select.Group>
-                    <Select.Item value="Langenbach">Langenbach</Select.Item>
-                    <Select.Item value="Freising">Freising</Select.Item>
-                    <Select.Item value="Moosburg">Moosburg</Select.Item>
-                    <Select.Item value="Custom">None</Select.Item>
-                </Select.Group>
-            </Select.Content>
-        </Select.Root>
-        <Drawer bind:formData={formData} />
+    <div class="form-header">
+        <h1>Brief erstellen</h1>
+        <div class="header-controls">
+            <Select.Root type="single" onValueChange={(v: string) => { selectedTemplate = v; formData = applyTemplate(v, formData); }}>
+                <Select.Trigger class="w-[180px]">
+                    {selectedTemplate || "Vorlage wählen"}
+                </Select.Trigger>
+                <Select.Content>
+                    <Select.Group>
+                        <Select.Item value="Langenbach">Langenbach</Select.Item>
+                        <Select.Item value="Freising">Freising</Select.Item>
+                        <Select.Item value="Moosburg">Moosburg</Select.Item>
+                        <Select.Item value="Custom">Keine</Select.Item>
+                    </Select.Group>
+                </Select.Content>
+            </Select.Root>
+            <Drawer bind:formData={formData} />
+        </div>
     </div>
 
     <div class="content-templates">
@@ -105,7 +112,7 @@
     <!-- Form fields -->
     <form onsubmit={submitForm}>
         <Input placeholder="Titel" bind:value={formData.title} />
-        <Textarea placeholder="Inhalt" bind:value={formData.content} />
+        <Textarea placeholder="Inhalt" bind:value={formData.content} class="min-h-[200px]" />
 
         <div class="form-checkbox">
             <Checkbox id="singup" bind:checked={formData.includeSignUp} aria-labelledby="signup-label" />
@@ -120,18 +127,18 @@
         <Separator />
         <div class="button-group">
             <div class="left-buttons">
-                <Button type="submit">Submit</Button>
+                <Button type="submit">PDF erstellen</Button>
                 <Button type="button" onclick={() => {
                     if (downloadURL) {
                         const a = document.createElement('a');
-                        a.href = downloadURL
+                        a.href = downloadURL;
                         a.download = 'letter.pdf';
                         a.click();
                     }
-                    downloadURL = undefined;
                 }}
                 disabled={!downloadURL}
-                >Download PDF</Button>
+                variant={downloadURL ? "default" : "outline"}
+                >PDF herunterladen</Button>
             </div>
         </div>
         <Separator />
@@ -140,15 +147,19 @@
 </div>
 
 <div class="preview-panel">
-    <h2 class="preview-title">Content Preview</h2>
-    <MarkdownPreview content={formData.content} />
+    <h2 class="preview-title">Vorschau</h2>
+    {#if formData.content}
+        <MarkdownPreview content={formData.content} />
+    {:else}
+        <div class="preview-empty">Noch kein Inhalt vorhanden</div>
+    {/if}
 </div>
 </div>
 
 <AlertDialog.Root open={isLoading}>
     <AlertDialog.Content class="loading-dialog">
         <AlertDialog.Header>
-            <AlertDialog.Title>Loading...</AlertDialog.Title>
+            <AlertDialog.Title>Wird erstellt…</AlertDialog.Title>
             <AlertDialog.Description class="loading-circle">
                 <Circle color="#000000" size="30"/>
             </AlertDialog.Description>
@@ -159,13 +170,13 @@
 <AlertDialog.Root open={errorDialogOpen} onOpenChange={() => {errorDialogOpen=!errorDialogOpen}}>
     <AlertDialog.Content>
         <AlertDialog.Header>
-            <AlertDialog.Title>Ein Fehler ist aufgetreten:</AlertDialog.Title>
+            <AlertDialog.Title>Ein Fehler ist aufgetreten</AlertDialog.Title>
             <AlertDialog.Description>
                 {errorDialogMessage}
             </AlertDialog.Description>
         </AlertDialog.Header>
         <AlertDialog.Footer>
-            <AlertDialog.Cancel>Close</AlertDialog.Cancel>
+            <AlertDialog.Cancel>Schließen</AlertDialog.Cancel>
         </AlertDialog.Footer>
     </AlertDialog.Content>
 </AlertDialog.Root>

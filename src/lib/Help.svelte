@@ -6,7 +6,7 @@ import * as Accordion from "$lib/components/ui/accordion";
 
 <Accordion.Root type="single" class="w-full">
     <Accordion.Item value="item-1">
-        <Accordion.Trigger>Show Content Formatting Rules</Accordion.Trigger>
+        <Accordion.Trigger>Formatierungsregeln anzeigen</Accordion.Trigger>
         <Accordion.Content>
             <div class="help-content">
                 <table class="markdown-table">

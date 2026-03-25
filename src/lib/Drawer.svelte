@@ -66,7 +66,7 @@ $effect(() => {
 <Sheet.Root>
     <Sheet.Trigger>
         {#snippet child({ props })}
-            <Button {...props} variant="secondary">Show More</Button>
+            <Button {...props} variant="secondary">Weitere Optionen</Button>
         {/snippet}
     </Sheet.Trigger>
     <Sheet.Content side="right">
@@ -103,8 +103,8 @@ $effect(() => {
                     <Input placeholder="Stammes Name" bind:value={formData.organizationName} />
                 </div>
                 <div class="input-label">
-                    <Label for="address">Addresse</Label>
-                    <Input placeholder="Addresse" bind:value={formData.address} />
+                    <Label for="address">Adresse</Label>
+                    <Input placeholder="Adresse" bind:value={formData.address} />
                 </div>
 
                 <div class="input-label">
@@ -146,7 +146,7 @@ $effect(() => {
                             </div>
                         </div>
                     {:else}
-                        <Button variant="secondary" onclick={() => {formData.website = ""}}>Add website</Button>
+                        <Button variant="secondary" onclick={() => {formData.website = ""}}>Website hinzufügen</Button>
                     {/if}
                 </div>
 
@@ -158,7 +158,7 @@ $effect(() => {
             <Sheet.Footer>
                 <Sheet.Close>
                     {#snippet child({ props })}
-                        <Button {...props}>Close</Button>
+                        <Button {...props}>Schließen</Button>
                     {/snippet}
                 </Sheet.Close>
             </Sheet.Footer>

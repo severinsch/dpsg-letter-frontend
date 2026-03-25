@@ -73,7 +73,7 @@
                             </div>
                         </div>
                     {:else}
-                        <Button variant="secondary" onclick={() => {person.phone = ""}}>Add Phone</Button>
+                        <Button variant="secondary" onclick={() => {person.phone = ""}}>Telefon hinzufügen</Button>
                     {/if}
                 </Card.Content>
             </Card.Root>
@@ -82,7 +82,7 @@
     {#if formData.people.length < 3}
         <Collapsible.Content>
             <div class="flex justify-center" style="margin-top: 1rem;">
-                <Button variant="secondary" onclick={addPerson}>Add</Button>
+                <Button variant="secondary" onclick={addPerson}>Person hinzufügen</Button>
             </div>
         </Collapsible.Content>
     {/if}

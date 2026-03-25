@@ -16,7 +16,7 @@
 
 <Collapsible.Root>
     <div class="flex items-center justify-between space-x-4 px-4">
-        <h4 class="text-sm font-semibold">Bank Information</h4>
+        <h4 class="text-sm font-semibold">Bankverbindung</h4>
 
         <Collapsible.Trigger>
             <Button variant="ghost" size="sm" class="w-9 p-0">
@@ -28,7 +28,7 @@
     {#if formData.bankInformation === undefined || formData.bankInformation == null}
         <Collapsible.Content>
             <div class="flex justify-center" style="margin-top: 1rem;">
-                <Button variant="secondary" onclick={addBankInformation}>Add</Button>
+                <Button variant="secondary" onclick={addBankInformation}>Hinzufügen</Button>
             </div>
         </Collapsible.Content>
     {:else}

@@ -28,7 +28,7 @@ export function validateModel(formData: LetterConfigModel): string | null {
                 continue
             }
             const missingName = getNestedValue(fieldMapping, field);
-            return `"${missingName}" is required`;
+            return `"${missingName}" is required. Did you select a template?`;
         }
     }
     if (formData.people.length < 2) return "At least 2 people are required";

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {DefaultApi, type LetterConfigModel} from "../api";
+    import {DefaultApi, type LetterConfigModel, ResponseError} from "../api";
     import {Input} from "$lib/components/ui/input";
     import {Checkbox} from "$lib/components/ui/checkbox";
     import {Textarea} from "$lib/components/ui/textarea";
@@ -61,8 +61,13 @@
                 showErrorMessage('API Error: Invalid response');
             }
             downloadURL = URL.createObjectURL(blob);
-        } catch (error) {
-            showErrorMessage(`API Error: ${error}`);
+        } catch (error: ResponseError | any) {
+            if (error instanceof ResponseError) {
+                showErrorMessage(`API Error: ${error.response.status}: ${error.response.statusText} - ${await error.response.text() || 'No additional error message provided'}`);
+            } else {
+                showErrorMessage(`API Error: ${error}`);
+            }
+            isLoading = false;
         }
     }
 </script>

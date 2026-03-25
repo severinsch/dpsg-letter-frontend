@@ -14,6 +14,8 @@ export const contentTemplates: ContentTemplate[] = [
 
 # TOP I: Begrüßung
 
+Bla Bla
+
 # TOP II:
 `,
     },

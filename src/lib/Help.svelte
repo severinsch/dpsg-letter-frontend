@@ -67,9 +67,16 @@ import * as Accordion from "$lib/components/ui/accordion";
                     <tr>
                         <td>
                             <code>@sev und @Max_Mustermann</code>
-                            <small>Consistent colors: Same name => same color.</small>
+                            <small>Gleiche Namen erhalten gleiche Farbe.</small>
                         </td>
                         <td><span style="background-color:rgba(33,220,229,0.7)">sev</span> und <span style="background-color:rgba(229,89,184,0.7)">Max Mustermann</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>[toc]</code> oder <code>[agenda]</code>
+                            <small>Nur wenn „Tagesordnung generieren" aktiviert ist.</small>
+                        </td>
+                        <td>Wird durch eine Tagesordnung ersetzt, die aus allen Hauptüberschriften (# ...) im Inhalt generiert wird.</td>
                     </tr>
                     </tbody>
                 </table>

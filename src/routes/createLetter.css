@@ -61,6 +61,15 @@ form > * {
     margin-left: 0.5rem;
 }
 
+.toc-info-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    margin-left: 0.4rem;
+    color: #9ca3af;
+    cursor: default;
+    flex-shrink: 0;
+}
+
 /* Drawer Styling */
 
 .drawer-header {

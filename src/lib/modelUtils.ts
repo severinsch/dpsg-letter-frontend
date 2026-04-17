@@ -5,6 +5,7 @@ interface TemplateConfig {
     langenbach: Partial<LetterConfigModel>;
     freising: Partial<LetterConfigModel>;
     moosburg: Partial<LetterConfigModel>;
+    bezirk_fs: Partial<LetterConfigModel>;
 }
 
 const templateConfig: TemplateConfig = templateConfigUntyped as TemplateConfig;
@@ -111,6 +112,7 @@ export function applyTemplate(templateName: string | unknown, formData: LetterCo
 const langenbachTemplate = templateConfig["langenbach"]
 const freisingTemplate = templateConfig["freising"]
 const moosburgTemplate = templateConfig["moosburg"]
+const bezirkFSTemplate = templateConfig["bezirk_fs"]
 
 const defaultTemplate: Partial<LetterConfigModel> = {
     logo: "DPSG",
@@ -121,5 +123,6 @@ const templates: { [key: string]: Partial<LetterConfigModel> } = {
     Langenbach: langenbachTemplate,
     Freising: freisingTemplate,
     Moosburg: moosburgTemplate,
+    BezirkFS: bezirkFSTemplate,
     Custom: defaultTemplate,
 };

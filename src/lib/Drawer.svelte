@@ -23,6 +23,8 @@ function getLogo(v: string | unknown): LetterConfigModelLogoEnum {
         case "Langenbach": return "Langenbach";
         case "DPSG": return "DPSG";
         case "Moosburg": return "Moosburg";
+        case "BezirkFS": return "BezirkFS";
+        case "Freising": return "Freising";
         default: return "DPSG";
     }
 }

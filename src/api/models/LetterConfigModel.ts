@@ -133,7 +133,9 @@ export interface LetterConfigModel {
 export const LetterConfigModelLogoEnum = {
     Dpsg: 'DPSG',
     Langenbach: 'Langenbach',
-    Moosburg: 'Moosburg'
+    Moosburg: 'Moosburg',
+    Freising: 'Freising',
+    BezirkFs: 'BezirkFS'
 } as const;
 export type LetterConfigModelLogoEnum = typeof LetterConfigModelLogoEnum[keyof typeof LetterConfigModelLogoEnum];
 

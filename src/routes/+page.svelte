@@ -94,6 +94,7 @@
                         <Select.Item value="Langenbach">Langenbach</Select.Item>
                         <Select.Item value="Freising">Freising</Select.Item>
                         <Select.Item value="Moosburg">Moosburg</Select.Item>
+                        <Select.Item value="BezirkFS">Bezirk Freising</Select.Item>
                         <Select.Item value="Custom">Keine</Select.Item>
                     </Select.Group>
                 </Select.Content>

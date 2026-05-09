@@ -45,4 +45,39 @@
         color: #555;
     }
     .markdown-preview :global(.heading-num) { margin-right: 0.2em; }
+
+    .markdown-preview :global(.latex-toc) {
+      margin-bottom: 2em;
+    }
+
+    .markdown-preview :global(.latex-toc-list) {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      /* \cftsecindent{1em} */
+      margin-left: 1em;
+    }
+
+    .markdown-preview :global(.latex-toc-list li) {
+      display: flex;
+      margin-top: 0;
+      margin-bottom: 0;
+      line-height: 1.4;
+    }
+
+    .markdown-preview :global(.latex-toc-number) {
+      width: 2em;
+      flex-shrink: 0;
+      display: inline-block;
+    }
+
+    .markdown-preview :global(.latex-toc-text) {
+      flex-grow: 1;
+    }
+
+    .markdown-preview :global(.latex-toc-title) {
+      font-weight: bold;
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
 </style>

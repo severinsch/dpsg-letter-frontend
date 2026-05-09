@@ -1,4 +1,4 @@
-import { Marked } from 'marked';
+import { type Tokens, Marked } from 'marked';
 
 // FNV-1a 32-bit hash — matches name_coloring.lua exactly.
 // Uses BigInt for the multiplication step to avoid float precision loss.
@@ -94,7 +94,7 @@ function renderTableBlock(content: string): string {
 
 // Module-level counters, reset before each parse so $derived re-renders stay consistent.
 let headingCounters = [0, 0, 0, 0, 0, 0];
-
+let tocList = "";
 const marked = new Marked();
 
 marked.use({
@@ -120,6 +120,25 @@ marked.use({
                 const displayName = (token.id as string).replace(/_/g, '\u00a0'); // underscore → non-breaking space
                 const box = `<span class="at-name" style="background:${bg};color:#000">${displayName}</span>`;
                 return token.punct ? box + token.punct : box;
+            }
+        },
+        {
+            name: 'toc',
+            level: 'block',
+            start(src: string) {
+                return src.match(/^\s*\[(toc|agenda)]\s*$/m)?.index ?? -1;
+            },
+            tokenizer(src: string) {
+                const match = /^\s*\[(toc|agenda)]\s*(?:\n|$)/.exec(src);
+                if (match) {
+                    return {
+                        type: 'toc',
+                        raw: match[0],
+                    };
+                }
+            },
+            renderer(token) {
+                return `<div class="latex-toc"><div class="latex-toc-title">Tagesordnung</div><ul class="latex-toc-list">${tocList}</ul></div>`;
             }
         }
     ],
@@ -148,5 +167,15 @@ marked.use({
 
 export function renderMarkdown(content: string): string {
     headingCounters = [0, 0, 0, 0, 0, 0];
-    return marked.parse(content) as string;
+    const tokens = marked.lexer(content);
+    tocList = tokens
+        .filter(t => t.type === "heading" && t.depth == 1)
+        .reduce((acc, t) => {
+            const tH = t as Tokens.Heading
+            return acc + `
+                <li>
+                  <span class="latex-toc-text">${tH.text}</span>
+                </li>`
+        }, "");
+    return marked.parser(tokens) as string;
 }

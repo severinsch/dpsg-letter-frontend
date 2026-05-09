@@ -89,7 +89,7 @@ export const emptyModel: LetterConfigModel = {
     includeFrontPage: true,
     includeHolidayLawPage: false,
     includeSignUp: false,
-    includeTableOfContents: false,
+    includeTableOfContents: true,
     signUpIncludeAbroadClause: false,
     people: [],
 }

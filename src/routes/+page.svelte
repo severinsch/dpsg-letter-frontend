@@ -8,8 +8,6 @@
     import * as AlertDialog from "$lib/components/ui/alert-dialog";
     import * as Dialog from "$lib/components/ui/dialog";
     import * as Popover from "$lib/components/ui/popover";
-    import * as Tooltip from "$lib/components/ui/tooltip";
-    import {Info} from "lucide-svelte";
     import {Separator} from "$lib/components/ui/separator";
     import { Label } from "$lib/components/ui/label";
     import {Circle} from 'svelte-loading-spinners';
@@ -120,21 +118,6 @@
         <div class="form-checkbox">
             <Checkbox id="singup" bind:checked={formData.includeSignUp} aria-labelledby="signup-label" />
             <Label id="signup-label" for="signup">Anmeldung anfügen</Label>
-        </div>
-
-        <div class="form-checkbox">
-            <Checkbox id="toc" bind:checked={formData.includeTableOfContents} aria-labelledby="toc-label" />
-            <Label id="toc-label" for="toc">Tagesordnung generieren</Label>
-            <Tooltip.Provider>
-                <Tooltip.Root>
-                    <Tooltip.Trigger>
-                        <Info class="toc-info-icon" />
-                    </Tooltip.Trigger>
-                    <Tooltip.Content>
-                        <p><code>[toc]</code> oder <code>[agenda]</code> im Inhalt wird durch eine Tagesordnung ersetzt,<br>die aus allen Hauptüberschriften (<code># ...</code>) generiert wird.</p>
-                    </Tooltip.Content>
-                </Tooltip.Root>
-            </Tooltip.Provider>
         </div>
 
         <Separator />

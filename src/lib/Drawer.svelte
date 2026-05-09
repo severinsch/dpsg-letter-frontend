@@ -8,12 +8,13 @@ import {ScrollArea} from "$lib/components/ui/scroll-area";
 
 import * as Select from "$lib/components/ui/select/index.js";
 import * as Sheet from "$lib/components/ui/sheet/index.js";
+import * as Tooltip from "$lib/components/ui/tooltip";
 import {DefaultApi, type LetterConfigModel} from "../api";
 import {LetterConfigModelLogoEnum} from "../api";
 import Vorstand from "$lib/Vorstand.svelte";
 import DatePicker from "$lib/components/DatePicker.svelte";
 import BankingInformation from "$lib/BankingInformation.svelte";
-import {CircleX} from "lucide-svelte";
+import {CircleX, Info} from "lucide-svelte";
 
 let { formData = $bindable() }: {formData: LetterConfigModel} = $props();
 
@@ -87,6 +88,20 @@ $effect(() => {
                     <DatePicker bind:value={formData.date} />
                 </div>
                 <Separator />
+                <div class="form-checkbox">
+                    <Checkbox id="toc" bind:checked={formData.includeTableOfContents} aria-labelledby="toc-label" />
+                    <Label id="toc-label" for="toc">Tagesordnung generieren</Label>
+                    <Tooltip.Provider>
+                        <Tooltip.Root>
+                            <Tooltip.Trigger>
+                                <Info class="toc-info-icon" />
+                            </Tooltip.Trigger>
+                            <Tooltip.Content>
+                                <p><code>[toc]</code> oder <code>[agenda]</code> im Inhalt wird durch eine Tagesordnung ersetzt,<br>die aus allen Hauptüberschriften (<code># ...</code>) generiert wird.</p>
+                            </Tooltip.Content>
+                        </Tooltip.Root>
+                    </Tooltip.Provider>
+                </div>
                 <div class="form-checkbox">
                     <Checkbox id="frontpage" bind:checked={formData.includeFrontPage} aria-labelledby="frontpage-label" />
                     <Label id="frontpage-label" for="frontpage">Titelseite anfügen</Label>

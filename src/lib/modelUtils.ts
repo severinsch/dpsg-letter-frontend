@@ -34,7 +34,7 @@ export function validateModel(formData: LetterConfigModel): string | null {
     }
     if (formData.people.length < 2) return "At least 2 people are required";
     for (const person of formData.people) {
-        if (!person.name || !person.role || !person.email) return "Each person must have a name, role and email";
+        if (!person.name || !person.role) return "Each person must have a name and role";
     }
     return null;
 }

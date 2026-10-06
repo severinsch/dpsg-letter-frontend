@@ -36,7 +36,7 @@ export interface Vorstand {
      * @type {string}
      * @memberof Vorstand
      */
-    email: string;
+    email?: string;
     /**
      * 
      * @type {string}
@@ -64,7 +64,6 @@ export type VorstandRoleEnum = typeof VorstandRoleEnum[keyof typeof VorstandRole
 export function instanceOfVorstand(value: object): value is Vorstand {
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('role' in value) || value['role'] === undefined) return false;
-    if (!('email' in value) || value['email'] === undefined) return false;
     return true;
 }
 
@@ -80,7 +79,7 @@ export function VorstandFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         
         'name': json['name'],
         'role': json['role'],
-        'email': json['email'],
+        'email': json['email'] == null ? undefined : json['email'],
         'phone': json['phone'] == null ? undefined : json['phone'],
     };
 }
